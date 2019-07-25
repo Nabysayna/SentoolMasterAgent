@@ -3,33 +3,45 @@
         <!-- <h1 class="app-name">Sb Admin Material</h1> -->
         <form class="login-form" fxFlex  >
             <div class="text-center">
-                <h2 class="app-name">Sb Admin Material</h2>
+                <h1 >Connexion</h1>
             </div>
-            <div fxFlex  fxlayout="row" fxlayout.lt-md="column">
+            <div *ngIf="!phases" fxFlex  fxlayout="row" fxlayout.lt-md="column">
                 <div fxFlexFill>
-                    <mat-form-field class="w-100">
-                        <input matInput placeholder="Email">
+                    <mat-form-field class=" w-100 md-form"> 
+                        <input  matInput placeholder="Login">
                     </mat-form-field>
                 </div>
             </div>
-            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+            <div *ngIf="!phases" fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
-                    <mat-form-field class="w-100">
-                        <input matInput type="password" placeholder="Password">
+                    <mat-form-field class="w-100 md-form"> 
+                        <input  matInput type="password" placeholder="Password">
                     </mat-form-field>
                 </div>
             </div>
-            <div fxFlex  fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
+            <div *ngIf="phases" fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <mat-form-field class="w-100 md-form">
+                        <input  matInput type="password" placeholder="SMS Code">
+                    </mat-form-field>
+                </div>
+            </div>
+           <!-- <div f²xFlex  fxLayout="row" fxLayout.lt-md="column" style="margin: 20px 0 30px 0">
                 <div fxFlex>
                     <mat-checkbox color="primary">Remember Me</mat-checkbox>
                 </div>
                 <div fxFlex  fxLayoutAlign="end">
                     <a href="javascript:void(0)">Forget Password</a>
                 </div>
-            </div>
-            <div fxFlex  fxLayout="row" fxLayout.lt-md="column">
+            </div>-->
+            <div *ngIf="!phases" fxFlex  fxLayout="row" fxLayout.lt-md="column">
                 <div fxFlexFill>
-                    <button mat-raised-button color="primary" class="w-100" (click)="onLogin()">Login</button>
+                    <button mat-raised-button color="primary" class="w-100" (click)="onLoginPhaseOne()">Login</button>
+                </div>
+            </div>
+            <div *ngIf="phases" fxFlex  fxLayout="row" fxLayout.lt-md="column">
+                <div fxFlexFill>
+                    <button mat-raised-button color="primary" class="w-100" (click)="onLoginPhaseTwo()">Login</button>
                 </div>
             </div>
 

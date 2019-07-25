@@ -1,53 +1,90 @@
 <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
     <div class="md-form"> 
         <label for="form1" class="">Date Debut: </label> 
-        <input type="date" id="form1" class="form-control" aria-describedby="material-addon2"> 
+        <input type="date" id="form1" [(ngModel)]="dateDebut"  class="form-control" aria-describedby="material-addon2"> 
     </div>
     <div class="md-form"> 
         <label for="form1" class="">Date Fin: </label> 
-        <input type="date" id="form2" class="form-control" aria-describedby="material-addon2"> 
+        <input type="date" id="form2" [(ngModel)]="dateFin"  class="form-control" aria-describedby="material-addon2"> 
     </div>
 
     <div class="md-form"> 
-        <a class="mat-raised-button" mat-raised-button> Charger</a> 
+        <a class="mat-raised-button"  style="margin-top: 2rem;background-color: #43a047;color: white;" (click)="rechercher()" mat-raised-button> Rechecher</a> 
     </div>
 </div>
 
 <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px" style="margin-bottom: 3rem">
     <div fxFlex>
-        <app-stat [bgClass]="'danger'" [icon]="'view_list'" [count]="13" [label]="'Nbre Transactions!'"></app-stat>
+        <app-stat [bgClass]="'danger'" [icon]="'view_list'" [count]="nombreTransaction" [label]="'Nbre Transactions!'"></app-stat>
     </div>
     <div fxFlex>
-        <app-stat [bgClass]="'warn'" [icon]="'play_for_work'" [count]="12" [label]="'CASH IN!'"></app-stat>
+        <app-stat [bgClass]="'warn'" [icon]="'play_for_work'" [count]="cashin" [label]="'CASH IN!'"></app-stat>
     </div>
     <div fxFlex>
-        <app-stat [bgClass]="'success'" [icon]="'open_in_browser'" [count]="124" [label]="'CASH OUT!'"></app-stat>
+        <app-stat [bgClass]="'success'" [icon]="'open_in_browser'" [count]="cashout" [label]="'CASH OUT!'"></app-stat>
     </div>
     <div fxFlex>
-        <app-stat [bgClass]="'info'" [icon]="'payment'" [count]="13" [label]="'COMMISSIONS!'"></app-stat>
+        <app-stat [bgClass]="'info'" [icon]="'payment'" [count]="commission" [label]="'COMMISSIONS!'"></app-stat>
     </div>
 </div>
 
 
-    <div fxFlex *ngFor="let item of places" fxLayout="col-md-3 col-sm-4 col-xs-12">
-        <mat-card>
+    <div fxFlex *ngFor="let item of places;let i=index" (click)="detailService(i);openModal(template)" fxLayout="col-md-3 col-sm-4 col-xs-12" style="flex-flow: row wrap;box-sizing: border-box;display: inline-flex;flex: 1 1 0%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);margin: 1rem;">
+        <mat-card style="
+        text-align:  left !important;
+        min-width: 20rem;
+        max-width: 21rem;
+    ">
+            
             <img mat-card-image [src]="item.imgSrc">
-            <mat-card-header style="justify-content: center">
-                <mat-card-title>
-                    <h3 class="m-0">{{item.place}}</h3>
-                </mat-card-title>
-            </mat-card-header>
             <mat-card-content>
-                <p> 
-                    {{item.description}}
+                
+                <p class="badge" style="font-size: 18px"> 
+                    Nombre Transaction : <i>{{item.nbrTransaction}}</i> 
                 </p>
             </mat-card-content>
 
             <mat-card-actions>
-                <button mat-button>{{item.charge}}</button>
-                <button mat-button>
-                    <mat-icon class="nav-icon">location_on</mat-icon> {{item.location}}
+                <button mat-button class="badge" style="font-size: 14px">Total : <i> {{item.montant}}</i></button>
+                <button mat-button class="badge" style="font-size: 14px">
+                    Commission : <i>{{item.commission}}</i>  
                 </button>
             </mat-card-actions>
         </mat-card>
     </div>
+    <ng-template #template>
+        <div class="modal-header" >
+          <h4 class="modal-title pull-left">Detail transaction: {{nombreDetail}}</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                <div *ngIf="this.listeDetail.length == 0 " class="btn btn-danger">
+                    <h2>Pas de transaction pour se service</h2>
+                </div>
+                <table *ngIf="this.listeDetail.length != 0 " class="table  table-striped " style="box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Date opération</th>
+                            <th scope="col">Produit</th>
+                            <th scope="col">Service</th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Commission</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let op of listeDetail;let i=index">
+                            <th scope="row">{{i+1}}</th>
+                            <td>{{op.dateoperation}}</td>
+                            <td>{{op.nomservice}}</td>
+                            <td>{{op.libelleoperation}}</td>
+                            <td>{{op.montant}}</td>
+                            <td>{{op.commissionpdv}}</td>
+                          </tr>
+                         
+                        </tbody>
+                      </table>
+        </div>
+      </ng-template>

@@ -16,6 +16,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MasterServiceService } from './service/master-service.service';
+import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { AuthService } from './service/auth.service';
+import { AuthenticationServiceService } from './service/authentication-service.service';
+
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
     /* for development
@@ -36,6 +42,8 @@ export const createTranslateLoader = (http: HttpClient) => {
         LayoutModule,
         OverlayModule,
         HttpClientModule,
+        FormsModule,
+        ModalModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -44,7 +52,11 @@ export const createTranslateLoader = (http: HttpClient) => {
             }
         })
     ],
-    providers: [],
+    providers: [
+        MasterServiceService,
+        AuthService,
+        AuthenticationServiceService,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

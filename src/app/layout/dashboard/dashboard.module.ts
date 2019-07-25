@@ -7,6 +7,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { StatModule } from '../../shared/modules/stat/stat.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
+import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [
@@ -19,6 +21,8 @@ import { DashboardComponent } from './dashboard.component';
         MatTableModule,
         MatButtonModule,
         MatIconModule,
+        FormsModule,
+        ModalModule.forRoot(),
         FlexLayoutModule.withConfig({addFlexToParent: false})
     ],
     declarations: [DashboardComponent]
