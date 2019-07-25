@@ -1,5 +1,6 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import { MasterServiceService } from 'src/app/service/master-service.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
@@ -39,7 +40,7 @@ export class Screen1Component implements OnInit {
     listeDetail:any = [];
     nombreDetail:number = 0;
     id_userSave:String;
-	constructor(private _masterService:MasterServiceService,private modalService: BsModalService) {}
+	constructor(private _masterService:MasterServiceService,private modalService: BsModalService) { }
     modalRef: BsModalRef;
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template,{class: 'modal-lg'});
@@ -68,7 +69,16 @@ export class Screen1Component implements OnInit {
             console.log(res['operations']);            
         });
     }
+
+   
+    @ViewChild(MatSort) sort: MatSort;
+    public doFilter = (value: string) => {
+        this.dataSource.filter = value.trim().toLocaleLowerCase();
+    }
+    
+   
 	ngOnInit() {
+       // this.dataSource.sort = this.sort;
         this._masterService.listeUser().then(res =>{
             this.listeUser = res['users'];
             this.dataSource = new MatTableDataSource(this.listeUser);
