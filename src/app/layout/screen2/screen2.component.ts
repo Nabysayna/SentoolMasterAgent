@@ -1,24 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatTableDataSource, MatSort } from '@angular/material';
-
-
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-    dateUpdte: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', dateUpdte: '2019-07-12 10:30:23' }
-];
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { MasterServiceService } from 'src/app/service/master-service.service';
 
 
 
@@ -29,13 +12,106 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class Screen2Component implements OnInit {
 
-    displayedColumns = ['position', 'name', 'weight', 'symbol'];
-    dataSource = new MatTableDataSource(ELEMENT_DATA);
+    listeUser:any = []; 
+    displayedColumns = ['telephone', 'nom', 'prenom', 'caution','option','option1'];
+    dataSource:any=[];
+    dateDebut:any;
+    dateFin:any;
+    listeDetail:any = [];
+    nombreDetail:number = 0;
+    id_userSave:String;
+	constructor(private _masterService:MasterServiceService,private modalService: BsModalService) { 
+    }
+    modalRef: BsModalRef;
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template,{class: 'modal-lg'});
+    }
+    modalRef1: BsModalRef;
+    openModal1(template1: TemplateRef<any>) {
+        this.modalRef1 = this.modalService.show(template1,{class: 'modal-lg'});
+    }
+    montant:number;
+    id_receiver
+    deposer(id_user){
+        this.id_receiver =id_user;
+        //console.log(id_user);
+        this.depositeError = 0;
+        this.montant = undefined;
+      
 
-	constructor() { }
+    }
+    depositeError:number = 0;
+    valider(){
+        this._masterService.updateCaution(this.montant,this.id_receiver).then(res=>{
+            if(res['code'] == 1){
+                this.depositeError = 1;
+            }else{
+                this.depositeError = -1;
+            }
+        })
+    }
+    suivi(id_user){
+        this.id_userSave = id_user;
+        this.listeDetail =[];
+        this.nombreDetail = 0;
+        this.dateDebut = ((new Date()).toJSON()).split("T",2)[0];
+        this.dateFin = ((new Date()).toJSON()).split("T",2)[0];
+        this._masterService.listOperationByPoint(this.dateDebut,this.dateFin,id_user).then(res =>{
+            this.listeDetail = res['operations'];
+            this.nombreDetail = this.listeDetail.length;
+            console.log(res['operations']);
+
+
+        });
+
+    }
+    rechercher(){
+        this.listeDetail =[];
+        this.nombreDetail = 0;
+         /* this._masterService.listOperationByPoint(this.dateDebut,this.dateFin,this.id_userSave).then(res =>{
+            this.listeDetail = res['operations'];
+            this.nombreDetail = this.listeDetail.length;
+            console.log(res['operations']);            
+        });*/
+        this._masterService.listedeposit(this.dateDebut,this.dateFin,this.id_userSave).then(res=>{
+            //console.log(res);
+            this.listeDetail = res['deposit'];
+            this.nombreDetail = this.listeDetail.length;
+            
+        })
+    }
+    currencyFormat(somme) : String{
+        return Number(somme).toLocaleString() ;
+      }
+    getInfo1(requete,nom){
+        let req = JSON.parse(requete);
+        if(nom == "prenom"){
+          return req.prenom;
+        } 
+        if(nom == "nom"){
+          
+          return req.nom;
+        }
+        if(nom == "montant"){
+          return req.montant ;
+        }
+    }
+   
     @ViewChild(MatSort) sort: MatSort;
+    doFilter = (value: string) => {
+        this.dataSource.filter = value.trim().toLocaleLowerCase();
+    }
+    
+  
 	ngOnInit() {
-        this.dataSource.sort = this.sort;
+        this._masterService.listeUser().then(res =>{
+            this.listeUser = res['users'];
+            this.dataSource = new MatTableDataSource(this.listeUser);
+            this.dataSource.sort = this.sort;   
+            console.log(res['users']); 
+        })
+        
+        
 	}
 
 }

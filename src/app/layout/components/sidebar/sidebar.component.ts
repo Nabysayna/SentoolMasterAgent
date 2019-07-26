@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MasterServiceService } from 'src/app/service/master-service.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -7,10 +8,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
     public showMenu: string;
-    constructor() {}
-
+    solde:any;
+    constructor(private _masterService:MasterServiceService) {}
+    getSolde(){
+        this._masterService.getSolde().then(res =>{
+            this.solde = res['caution']
+            
+        })
+    }
+    currencyFormat(somme) : String{
+        return Number(somme).toLocaleString() ;
+      }
     ngOnInit() {
         this.showMenu = '';
+        this._masterService.getSolde().then(res =>{
+            this.solde = res['caution']
+            
+        })
     }
 
     addExpandClass(element: any) {

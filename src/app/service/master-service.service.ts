@@ -35,4 +35,29 @@ export class MasterServiceService {
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
 
+  public listedeposit(dateDebut,dateFin,id_user): Promise<any>{
+    let params="param="+JSON.stringify({dateDebut:dateDebut,dateFin:dateFin,token:this.token,id_user:id_user});
+    console.log(params);
+    
+    let link=this.url+"/utils/listDeposit";
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  }
+
+  public updateCaution(montant,id_user): Promise<any>{
+    let params="param="+JSON.stringify({montant:montant,token:this.token,id_receiver:id_user});
+    console.log(params);
+    
+    let link=this.url+"/utils/updateCaution";
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  }
+
+  public getSolde(): Promise<any>{
+    let params="param="+JSON.stringify({token:this.token});
+    console.log(params);
+    
+    let link=this.url+"/utils/getSolde";
+    return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
+  }
+
+
 }

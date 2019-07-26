@@ -8,7 +8,8 @@ import {
     MatMenuModule,
     MatSidenavModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSortModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -20,6 +21,8 @@ import { Screen2Component } from './screen2/screen2.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { FormsModule } from '@angular/forms';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -36,8 +39,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
         MatTableModule,
         FlexLayoutModule,
         MatGridListModule,
+        MatSortModule,
+        FormsModule,
+        ModalModule.forRoot(),
         TranslateModule
     ],
+    exports: [
+        MatSortModule,],
     declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, ]
 
 })
