@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource, MatSort } from '@angular/material';
 
 
 export interface PeriodicElement {
@@ -33,8 +33,9 @@ export class Screen2Component implements OnInit {
     dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 	constructor() { }
-
+    @ViewChild(MatSort) sort: MatSort;
 	ngOnInit() {
+        this.dataSource.sort = this.sort;
 	}
 
 }

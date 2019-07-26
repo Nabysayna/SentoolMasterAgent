@@ -6,7 +6,8 @@ import {
     MatIconModule,
     MatListModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSortModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -57,6 +58,10 @@ export const createTranslateLoader = (http: HttpClient) => {
         AuthService,
         AuthenticationServiceService,
     ],
+    exports: [
+        MatSortModule,
+    ],
+
     bootstrap: [AppComponent]
 })
 export class AppModule {}

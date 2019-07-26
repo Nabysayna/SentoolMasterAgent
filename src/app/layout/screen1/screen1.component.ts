@@ -1,29 +1,8 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { MasterServiceService } from 'src/app/service/master-service.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
-
-export interface PeriodicElement {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-    dateUpdte: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C', dateUpdte: '2019-07-12 10:30:23' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N', dateUpdte: '2019-07-12 10:30:23' }
-];
-
-
 
 @Component({
   selector: 'app-screen1',
@@ -33,14 +12,16 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class Screen1Component implements OnInit {
 
     listeUser:any = []; 
-    displayedColumns = ['position', 'name', 'weight', 'symbol','option'];
-    dataSource:any;
+    displayedColumns = ['telephone', 'nom', 'prenom', 'caution','option'];
+    dataSource:any=[];
     dateDebut:any;
     dateFin:any;
     listeDetail:any = [];
     nombreDetail:number = 0;
     id_userSave:String;
-	constructor(private _masterService:MasterServiceService,private modalService: BsModalService) { }
+	constructor(private _masterService:MasterServiceService,private modalService: BsModalService) { 
+        this.sortedData = this.listeDetail.slice();
+    }
     modalRef: BsModalRef;
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template,{class: 'modal-lg'});
@@ -72,20 +53,41 @@ export class Screen1Component implements OnInit {
 
    
     @ViewChild(MatSort) sort: MatSort;
-    public doFilter = (value: string) => {
+    doFilter = (value: string) => {
         this.dataSource.filter = value.trim().toLocaleLowerCase();
     }
+    sortedData:any =[]
+    sortData(sort: Sort) {
+        const data = this.listeDetail.slice();
+        if (!sort.active || sort.direction === '') {
+          this.sortedData = data;
+          return;
+        }
     
-   
+        this.sortedData = data.sort((a, b) => {
+          const isAsc = sort.direction === 'asc';
+          switch (sort.active) {
+            case 'nom': return this.compare(a.nom, b.nom, isAsc);
+            case 'prenom': return this.compare(a.prenom, b.prenom, isAsc);
+            case 'caution': return this.compare(a.caution, b.caution, isAsc);
+            default: return 0;
+          }
+        });
+      }
+    
+    
+     compare(a: number | string, b: number | string, isAsc: boolean) {
+      return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    }
 	ngOnInit() {
-       // this.dataSource.sort = this.sort;
         this._masterService.listeUser().then(res =>{
             this.listeUser = res['users'];
             this.dataSource = new MatTableDataSource(this.listeUser);
-
-            console.log(res['users']);
-            
+            this.dataSource.sort = this.sort;   
+            console.log(res['users']); 
         })
+        
+        
 	}
 
 }
