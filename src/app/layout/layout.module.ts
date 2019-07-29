@@ -23,6 +23,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CreateCompteComponent } from './create-compte/create-compte.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AuthenticationServiceService } from '../service/authentication-service.service';
+import { AuthService } from '../service/auth.service';
+import { MasterServiceService } from '../service/master-service.service';
+import { HttpModule } from '@angular/http';
 
 
 @NgModule({
@@ -41,12 +47,19 @@ import { ModalModule } from 'ngx-bootstrap/modal';
         MatGridListModule,
         MatSortModule,
         FormsModule,
+        HttpClientModule,
+        HttpModule,
         ModalModule.forRoot(),
         TranslateModule
     ],
+    providers: [
+        MasterServiceService,
+        AuthService,
+        AuthenticationServiceService,
+    ],
     exports: [
         MatSortModule,],
-    declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, ]
+    declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, CreateCompteComponent, ]
 
 })
 export class LayoutModule { }

@@ -7,6 +7,7 @@ import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationServiceService } from '../service/authentication-service.service';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
     imports: [
@@ -16,6 +17,7 @@ import { AuthenticationServiceService } from '../service/authentication-service.
         MatCheckboxModule,
         MatButtonModule,
         FormsModule,
+        HttpModule,
         FlexLayoutModule.withConfig({addFlexToParent: false})
     ],
     providers: [

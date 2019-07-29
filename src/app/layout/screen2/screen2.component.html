@@ -110,18 +110,18 @@
                 <div class="md-form"> 
                     <a class="mat-raised-button"  style="margin-top: 2rem;background-color: #43a047;color: white;" (click)="valider()" mat-raised-button> Valider</a> 
                 </div>
-                <div  *ngIf="depositeError == 1 " class="btn btn-success ">
-                    <h2>deposite reussi </h2>
-                </div>
-                
-               
             </div>
-            <div class="row">
-                <div *ngIf="depositeError == -1 " class="btn btn-danger">
-                    <h2>Erreur deposite non effectué </h2>
-                </div>
-            </div>
+          
         </div>
-
+        <div class="row">
+                <div class="col-12">
+                   <div  *ngIf="depositeError == 1 " class="btn btn-success ">
+                       <h2>{{message}} </h2>
+                   </div>
+                   <div *ngIf="depositeError == -1 " class="btn btn-danger">
+                       <h2>{{message}} </h2>
+                   </div>
+             </div>
+           </div>
     </div>
     </ng-template>

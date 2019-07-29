@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './auth.service';
+import {Http, Headers} from "@angular/http";
 import * as sha1 from 'js-sha1';
 @Injectable({
   providedIn: 'root'
@@ -13,67 +13,72 @@ export class AuthenticationServiceService {
   public telephone: string ;
   public accessLevel: number ;
   public authorizedApis: string ;
+  private link = "https://sentool.bbstvnet.com/index.php"; 
 
-  constructor(private _authService:AuthService) {
-    var currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    this.baseToken = currentUser && currentUser.baseToken;
+  private headers=new Headers();
+
+  public datas:any;
+
+
+  constructor(private http:Http) {
+    this.headers.append('Content-Type', 'application/x-www-form-urlencoded');
+   }
+
+   
+  login(data:any){
+    let url = this.link+"/auth-sen/authentification";
+    let datas = JSON.stringify({login:data.login, pwd: sha1(data.pwd) });
+    let params = 'params='+datas;
+    console.log(params) ;
+    return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
+      console.log(res);
+      console.log(res);
+      if( res['_body'] != 'false' ){
+        sessionStorage.setItem('headToken', res['_body'].split("#")[1] );
+        return JSON.parse(res['_body']) 
+      }
+     
+
+    } ).catch(error => {console.log(error);return 'bad' });
   }
 
-  login(email: string, password: string): Promise<string> {
-    return new Promise( (resolve, reject)=> {
-      console.log("-------111-----------")
-      this._authService.authentifier({login:email, pwd:sha1(password)}).then(
-        response => {
-          console.log(Response);
-          
-          if( response != 'false' ){
-            sessionStorage.setItem('headToken', response.split("#")[1] );
-            resolve(response);
-          } else {
-            resolve("rejected");
-          }
-        },
-        error => reject("rejected"),
-        
-      )
-    });
+  authentificationPhaseTwo(data:any){
+    let url = this.link+"/auth-sen/authentificationPhaseTwo";
+    let datas = JSON.stringify({tokentemporaire:data.tokentemporaire});
+    let params = 'params='+datas;
+    console.log(params) ;
+
+    return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
+     let resp = JSON.parse(res['_body']);
+      sessionStorage.setItem('currentUser', JSON.stringify({ username: this.email, baseToken: this.baseToken, authorizedApis:this.authorizedApis, accessLevel:resp.accessLevel, prenom:resp.prenom, nom:resp.nom, telephone:resp.telephone, firstuse:resp.firstuse}));
+      console.log(res);
+
+      return JSON.parse(JSON.parse(res['_body']) )
+     } ).catch(error => {console.log(error);return 'bad' });
   }
 
-  loginPhase2(smsCode): Promise<number> {
-    return new Promise( (resolve, reject)=> {
-      this._authService.authentificationPhaseTwo({tokentemporaire:smsCode}).then(
-        response => {
-         /* var resp:AuthResponse=JSON.parse(response);
-          console.log("11------------") ;
-          console.log(resp) ;
-          console.log(resp.reponse) ;
-          console.log(resp.reponse==true?'oui':'non')
-          console.log("------------11") ;
-          if(resp.reponse==true){
-            this.baseToken = sessionStorage.getItem('headToken')+sha1(resp.baseToken+sha1("bay3k00_f1_n10un") );
-            this.email = resp.prenom;
-            this.prenom = resp.prenom;
-            this.nometps = resp.nometps;
-            this.nom = resp.nom;
-            this.telephone = resp.telephone;
-            this.accessLevel = resp.accessLevel;
-            this.authorizedApis = resp.authorizedApis;
 
-            sessionStorage.setItem('currentUser', JSON.stringify({ username: this.email, baseToken: this.baseToken, authorizedApis:this.authorizedApis, accessLevel:this.accessLevel, prenom:this.prenom, nom:this.nom, telephone:this.telephone, firstuse:resp.firstuse}));
+  loggout(){
+    let url = this.link+"/auth-sen/deconnexion";
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, hdeconnexion:"345"});
 
-            resolve(this.accessLevel);
-          } else {
-            resolve(0);
+    let params = 'params='+datas;
 
-          }*/
-        },
-        error => reject(error),
-      )
-    });
+    return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {console.log(res);return JSON.parse(JSON.parse(res['_body']) ) } ).catch(error => {console.log(error);return 'bad' });
   }
 
-  logout(): void {
-    this.baseToken = null;
-    sessionStorage.removeItem('currentUser');
+
+  inscription(data:any){
+    let url = this.link+"/auth-sen/inscription";
+    let datas = JSON.stringify(data);
+    let params = 'params='+datas;
+    return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
+      console.log(res);
+      return JSON.parse(res['_body']) ;
+      } ).catch(error => {
+      console.log(error);
+      return 'bad' 
+      });
+
   }
 }

@@ -1,6 +1,6 @@
 <div id="sidebar">
     <mat-nav-list>
-        <a mat-list-item (click)="getSolde" style="cursor: pointer">
+        <a mat-list-item (click)="getSolde()" style="cursor: pointer">
             Solde : {{currencyFormat(solde)}} FCFA
         </a>
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/dashboard']">
@@ -11,6 +11,9 @@
         </a>
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/screen2']">
             <mat-icon class="sidenav-icon">people</mat-icon> {{ 'Suivi Points' | translate }}
+        </a>
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/createcompte']">
+            <mat-icon class="sidenav-icon">add</mat-icon> {{ 'Créer compte' | translate }}
         </a>
     </mat-nav-list>
 </div>
