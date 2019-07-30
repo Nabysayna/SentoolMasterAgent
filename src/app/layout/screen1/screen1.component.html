@@ -39,7 +39,9 @@
           </button>
         </div>
         <div class="modal-body">
-                <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="mb-20" fxLayout="row" fxLayout.lt-md="column" fxFlex fxLayoutGap="20px">
                         <div class="md-form"> 
                             <label for="form1" class="">Date Debut: </label> 
                             <input type="date" id="form1" [(ngModel)]="dateDebut"  class="form-control" aria-describedby="material-addon2"> 
@@ -53,31 +55,36 @@
                             <a class="mat-raised-button"  style="margin-top: 2rem;background-color: #43a047;color: white;" (click)="rechercher()" mat-raised-button> Rechecher</a> 
                         </div>
                     </div>
-                <div *ngIf="nombreDetail == 0 " class="btn btn-danger">
-                    <h2>Pas de transaction pour se point</h2>
                 </div>
-                <table *ngIf="nombreDetail != 0 " class="table  table-striped " style="box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">                        
+                    <div *ngIf="nombreDetail == 0 " class="btn btn-danger">
+                        <h2>Pas de transaction pour se point</h2>
+                    </div>
+                    <table *ngIf="nombreDetail != 0 " class="table  table-striped " style="box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);">
                         <thead>
-                          <tr>
+                            <tr>
                             <th scope="col">#</th>
                             <th scope="col">Date opération</th>
                             <th scope="col">Produit</th>
                             <th scope="col">Service</th>
                             <th scope="col">Montant</th>
                             <th scope="col">Commission</th>
-                          </tr>
+                            </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let op of listeDetail;let i=index">
+                            <tr *ngFor="let op of listeDetail;let i=index">
                             <th scope="row">{{i+1}}</th>
                             <td>{{op.dateoperation}}</td>
                             <td>{{op.nomservice}}</td>
                             <td>{{op.libelleoperation}}</td>
                             <td>{{op.montant}}</td>
                             <td>{{op.commissionpdv}}</td>
-                          </tr>
-                         
+                            </tr>
                         </tbody>
-                      </table>
+                    </table>
+                </div>
+
+            </div>
+              
         </div>
       </ng-template>

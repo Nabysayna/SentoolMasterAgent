@@ -1,9 +1,14 @@
 <div class="container">
   <div class="panel panel-heading"> <h1 style="font-family: monospace; text-align: center;">Création de compte</h1> </div>
   <div class="panel panel-bady">
+     
       <form class="login-form" fxFlex  >
         <div class="row" style="box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <span *ngIf="response == -1" class="btn btn-danger"><h3>Echec de création</h3></span>
+              <span *ngIf="response == 1" class="btn btn-danger"><h3>Création reussi </h3></span>
+           </div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div fxFlexFill>
                   <mat-form-field class=" w-100 md-form"> 
                       <input [ngModelOptions]="{standalone: true}" [(ngModel)]="codeCreation"  matInput placeholder="Code Agent Commercial">
@@ -63,5 +68,4 @@
         </div>
       </form>
   </div>
-
 </div>

@@ -9,7 +9,10 @@ import {
     MatSidenavModule,
     MatTableModule,
     MatToolbarModule,
-    MatSortModule
+    MatSortModule,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    MatSnackBar,
+    MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -56,6 +59,8 @@ import { HttpModule } from '@angular/http';
         MasterServiceService,
         AuthService,
         AuthenticationServiceService,
+        MatSnackBar,
+        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS_FACTORY, useValue: {duration: 2500}}
     ],
     exports: [
         MatSortModule,],

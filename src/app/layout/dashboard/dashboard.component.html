@@ -29,7 +29,7 @@
 </div>
 
 
-    <div fxFlex *ngFor="let item of places;let i=index" (click)="detailService(i);openModal(template)" fxLayout="col-md-3 col-sm-4 col-xs-12" style="flex-flow: row wrap;box-sizing: border-box;display: inline-flex;flex: 1 1 0%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);margin: 1rem;">
+    <div fxFlex *ngFor="let item of places;let i=index" (click)="openModal(template);detailService(i)" fxLayout="col-md-3 col-sm-4 col-xs-12" style="flex-flow: row wrap;box-sizing: border-box;display: inline-flex;flex: 1 1 0%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);margin: 1rem;">
         <mat-card style="
         text-align:  left !important;
         min-width: 20rem;
@@ -59,7 +59,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" style="overflow-x: scroll">
                 <div *ngIf="this.listeDetail.length == 0 " class="btn btn-danger">
                     <h2>Pas de transaction pour se service</h2>
                 </div>

@@ -300,6 +300,13 @@ export class DashboardComponent implements OnInit {
                 montant: 0,
                 commission: 0,
                 service:""
+            },
+            {
+                imgSrc: 'assets/images/ti.jpg',
+                nbrTransaction:  0,
+                montant: 0,
+                commission: 0,
+                service:""
             }
         ];
     }

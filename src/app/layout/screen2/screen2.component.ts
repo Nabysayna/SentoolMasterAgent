@@ -46,6 +46,8 @@ export class Screen2Component implements OnInit {
         if(confirm('Vous allez effectué un positionnement sur ce compte '+this.currencyFormat(this.montant)+" FCFA")){
             this._masterService.updateCaution(this.montant,this.id_receiver).then(res=>{
                 this.message = res['message'];
+                console.log(res['message']);
+                
                 if(res['code'] == 1){
                     this.depositeError = 1;
                     this._masterService.listeUser().then(res =>{
