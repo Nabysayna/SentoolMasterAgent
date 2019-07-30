@@ -43,21 +43,24 @@ export class Screen2Component implements OnInit {
     depositeError:number = 0;
     message:string="";
     valider(){
-        this._masterService.updateCaution(this.montant,this.id_receiver).then(res=>{
-            this.message = res['message'];
-            if(res['code'] == 1){
-                this.depositeError = 1;
-                this._masterService.listeUser().then(res =>{
-                    this.listeUser = res['users'];
-                    this.dataSource = new MatTableDataSource(this.listeUser);
-                    this.dataSource.sort = this.sort;   
-                    console.log(res['users']); 
-                })
-            }else{
-                this.depositeError = -1;
-            }
-        });
-        this.modalRef1.hide();
+        if(confirm('Vous allez effectué un positionnement sur ce compte '+this.currencyFormat(this.montant)+" FCFA")){
+            this._masterService.updateCaution(this.montant,this.id_receiver).then(res=>{
+                this.message = res['message'];
+                if(res['code'] == 1){
+                    this.depositeError = 1;
+                    this._masterService.listeUser().then(res =>{
+                        this.listeUser = res['users'];
+                        this.dataSource = new MatTableDataSource(this.listeUser);
+                        this.dataSource.sort = this.sort;   
+                        console.log(res['users']); 
+                    })
+                }else{
+                    this.depositeError = -1;
+                }
+            });
+            this.modalRef1.hide();
+        }
+       
     }
     suivi(id_user){
         this.id_userSave = id_user;

@@ -104,7 +104,7 @@
                     <input type="text" id="form1" [(ngModel)]="montant"  class="form-control" aria-describedby="material-addon2"> 
                 </div>
                 <div class="md-form"> 
-                    <input type="text" style="margin-top: 2rem;" id="form2" value="{{currencyFormat(somme)}}"  class="form-control" aria-describedby="material-addon2"> 
+                    <input type="text" readonly style="margin-top: 2rem;" id="form2" value="{{currencyFormat(montant)}} FCFA"  class="form-control" aria-describedby="material-addon2"> 
                 </div>
             
                 <div class="md-form"> 

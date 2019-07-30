@@ -18,7 +18,7 @@ export class CreateCompteComponent implements OnInit {
 
   constructor(private _authService:AuthenticationServiceService) { }
   creerpoint(){
-    let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email+".ca", 'telephone':this.tel+"#"+this.codeCreation, 'nometps':"-", 'nomshop':"-", adresse : JSON.stringify({'region':this.region, 'zone':"-", 'souszone':"-", 'address':this.adresse}), 'idcommercial':3 };
+    let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.tel+"#"+this.codeCreation, 'nometps':"-", 'nomshop':"-", adresse : JSON.stringify({'region':this.region, 'zone':"-", 'souszone':"-", 'address':this.adresse}), 'idcommercial':3 };
     console.log(paramInscrpt);
     this._authService.inscription(paramInscrpt).then(res=>{
       console.log(res);

@@ -28,11 +28,12 @@ export class AuthenticationServiceService {
   login(data:any){
     let url = this.link+"/auth-sen/authentification";
     let datas = JSON.stringify({login:data.login, pwd: sha1(data.pwd) });
+    this.email = data.login;
     let params = 'params='+datas;
     console.log(params) ;
     return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
-      console.log(res);
-      console.log(res);
+      //console.log(res);
+      //console.log(res);
       if( res['_body'] != 'false' ){
         sessionStorage.setItem('headToken', res['_body'].split("#")[1] );
         return JSON.parse(res['_body']) 
@@ -49,9 +50,12 @@ export class AuthenticationServiceService {
     console.log(params) ;
 
     return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
-     let resp = JSON.parse(res['_body']);
-      sessionStorage.setItem('currentUser', JSON.stringify({ username: this.email, baseToken: this.baseToken, authorizedApis:this.authorizedApis, accessLevel:resp.accessLevel, prenom:resp.prenom, nom:resp.nom, telephone:resp.telephone, firstuse:resp.firstuse}));
-      console.log(res);
+     let rp = JSON.parse(res['_body']);
+     let resp = JSON.parse(rp);
+     
+     
+      sessionStorage.setItem('currentUser', JSON.stringify({ username: this.email, baseToken: resp.baseToken, authorizedApis:resp.authorizedApis, accessLevel:resp.accessLevel, prenom:resp.prenom, nom:resp.nom, telephone:resp.telephone, firstuse:resp.firstuse}));
+      console.log(JSON.parse(sessionStorage.getItem('currentUser')).baseToken);
 
       return JSON.parse(JSON.parse(res['_body']) )
      } ).catch(error => {console.log(error);return 'bad' });
