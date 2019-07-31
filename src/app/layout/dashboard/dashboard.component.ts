@@ -85,13 +85,16 @@ export class DashboardComponent implements OnInit {
         this.modalRef = this.modalService.show(template,{class: 'modal-lg'});
       }
     rechercher(){
+       this.places = [];
         this._masterService.listeOperation(this.dateDebut,this.dateFin).then(res =>{
             this.operation = res['operations'];
             //console.log(operation);
             this.nombreTransaction = this.operation.length;
             
             for(let i of this.operation){
-                this.commission = this.commission+ parseInt(i.commissionpdv);
+                if(i.commissionpdv != null){
+                    this.commission = this.commission+ parseInt(i.commissionpdv);
+                }
                // console.log(i.libelleoperation.indexOf("retrait"));
                 
                 if(i.libelleoperation.startsWith("retrait") == true || i.libelleoperation.startsWith("transfert") == true){
@@ -105,70 +108,85 @@ export class DashboardComponent implements OnInit {
             }     
                  
         });
+        //console.log(this.places);
+        //console.log(this.commission);
+        
     }
     getInfo(service,i){
-        if(service == "orangeMoney"){
-            this.nbrTransOm ++;
-            this.montantTransOm = this.montantTransOm + parseInt(i.montant);
-            this.commissionTransOm = this.commissionTransOm + parseInt(i.commissionpdv);
-            let om = this.places.find(place => place.imgSrc == 'assets/images/om.jpg');
-            om.nbrTransaction = this.nbrTransOm;
-            om.montant = this.montantTransOm;
-            om.commission = this.commissionTransOm;
-            om.service = service;
+        if(!this.isFacturier(i.libelleoperation)){
+            if(this.places.find(place => place.service == service)){
+                let obj = this.places.find(place => place.service == service)
+                obj.imgSrc = 'assets/images/'+service+'.jpg';
+                obj.nbrTransaction ++;
+                obj.montant =  obj.montant + parseInt(i.montant);
+                if(i.commissionpdv != null){
+                    obj.commission = obj.commission + parseInt(i.commissionpdv);
+                }else{
+                    obj.commission = obj.commission + 0;
+                }
+                obj.service = service;
+    
+            }else{
+                let newObj = {
+                    imgSrc: 'assets/images/'+service+'.jpg',
+                    nbrTransaction:  0,
+                    montant: 0,
+                    commission: 0,
+                    service:""
+    
+                }
+                newObj.nbrTransaction ++;
+                newObj.montant =  newObj.montant + parseInt(i.montant);
+                if(i.commissionpdv != null){
+                    newObj.commission = newObj.commission + parseInt(i.commissionpdv);
+                }else{
+                    newObj.commission = newObj.commission + 0;
+                }
+                newObj.service = service;
+                this.places.push(newObj);
+            }
+        }else{
+
+            if(this.places.find(place => place.service == i.libelleoperation)){
+                let obj = this.places.find(place => place.service == i.libelleoperation)
+                obj.imgSrc = 'assets/images/'+i.libelleoperation+'.jpg';
+                obj.nbrTransaction ++;
+                obj.montant =  obj.montant + parseInt(i.montant);
+                if(i.commissionpdv != null){
+                    obj.commission = obj.commission + parseInt(i.commissionpdv);
+                }else{
+                    obj.commission = obj.commission + 0;
+                }
+                obj.service = i.libelleoperation;
+    
+            }else{
+                let newObj = {
+                    imgSrc: 'assets/images/'+i.libelleoperation+'.jpg',
+                    nbrTransaction:  0,
+                    montant: 0,
+                    commission: 0,
+                    service:""
+    
+                }
+                newObj.nbrTransaction ++;
+                newObj.montant =  newObj.montant + parseInt(i.montant);
+                if(i.commissionpdv != null){
+                    newObj.commission = newObj.commission + parseInt(i.commissionpdv);
+                }else{
+                    newObj.commission = newObj.commission + 0;
+                }
+                newObj.service = i.libelleoperation;
+                this.places.push(newObj);
+            }
         }
-        if(service == "tiogCash"){
-            this.nbrTransTC ++;
-            this. montantTransTC = this.montantTransTC + parseInt(i.montant);
-            this.commissionTransTC = this.commissionTransTC + parseInt(i.commissionpdv);
-            let tc = this.places.find(place => place.imgSrc == 'assets/images/tc.jpg');
-            tc.nbrTransaction = this.nbrTransTC;
-            tc.montant = this.montantTransTC;
-            tc.commission = this.commissionTransTC;
-            tc.service = service;
-        }
-        if(service == "Emoney"){
-            this.nbrTransEM ++;
-            this.montantTransEM = this.montantTransTC + parseInt(i.montant);
-            this.commissionTransEM = this.commissionTransTC + parseInt(i.commissionpdv);
-            let em = this.places.find(place => place.imgSrc == 'assets/images/emo.jpg');
-            em.nbrTransaction = this.nbrTransEM;
-            em.montant = this.montantTransEM;
-            em.commission = this.commissionTransEM;
-            em.service = service;
-        }
-        if(service == "wizall"){
-            this.nbrTransWZ ++;
-            this.montantTransWZ = this.montantTransWZ + parseInt(i.montant);
-            this.commissionTransWZ = this.commissionTransWZ + parseInt(i.commissionpdv);
-            let wiz = this.places.find(place => place.imgSrc == 'assets/images/wiz.png');
-           // console.log(wiz);  
-            wiz.nbrTransaction = this.nbrTransWZ;
-            wiz.montant = this.montantTransWZ;
-            wiz.commission = this.commissionTransWZ;
-            wiz.service = service;
-        }
-        if(service == "canal"){
-            this.nbrTransCA ++;
-            this.montantTransCA = this.montantTransCA + parseInt(i.montant);
-            this.commissionTransCA = this.commissionTransCA + parseInt(i.commissionpdv);
-            let ca = this.places.find(place => place.imgSrc == 'assets/images/cp.png');
-           // console.log(wiz);  
-            ca.nbrTransaction = this.nbrTransCA;
-            ca.montant = this.montantTransCA;
-            ca.commission = this.commissionTransCA;
-            ca.service = service;
-        }
-        if(service == "tnt"){
-            this.nbrTransTNT ++;
-            this.montantTransTNT = this.montantTransTNT + parseInt(i.montant);
-            this.commissionTransTNT = this.commissionTransTNT + parseInt(i.commissionpdv);
-            let tnt = this.places.find(place => place.imgSrc == 'assets/images/tnt.jpg');
-           // console.log(wiz);  
-           tnt.nbrTransaction = this.nbrTransTNT;
-           tnt.montant = this.montantTransTNT;
-           tnt.commission = this.commissionTransTNT;
-           tnt.service = service;
+        
+
+    }
+    isFacturier(libelleoperation){
+        if(libelleoperation.includes('senelec') ||libelleoperation.includes('sde')  || libelleoperation.includes('woyofal') || libelleoperation.includes('rapido')){
+            return true;
+        }else{
+            return false;
         }
     }
     listeDetail:any;
@@ -178,9 +196,16 @@ export class DashboardComponent implements OnInit {
         let serv =this.places[i].service;
         console.log(serv);
         for(let i of this.operation){
-            if(i.nomservice == serv){
-                this.listeDetail.push(i);
+            if(!this.isFacturier(i.libelleoperation)){
+                if(i.nomservice == serv){
+                    this.listeDetail.push(i);
+                }
+            }else{
+                if(i.libelleoperation == serv){
+                    this.listeDetail.push(i);
+                }
             }
+           
         }
         this.nombreDetail = this.listeDetail.length;
         console.log(this.listeDetail);
@@ -209,7 +234,7 @@ export class DashboardComponent implements OnInit {
             }     
                  
         });
-        this.places = [
+       /* this.places = [
             {
                 imgSrc: 'assets/images/om.jpg',
                 nbrTransaction:  0,
@@ -308,6 +333,6 @@ export class DashboardComponent implements OnInit {
                 commission: 0,
                 service:""
             }
-        ];
+        ];*/
     }
 }

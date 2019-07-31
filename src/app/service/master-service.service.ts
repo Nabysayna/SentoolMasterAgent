@@ -11,8 +11,9 @@ export class MasterServiceService {
     this.header = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
    }
 
-  token="b21efc053cc7e16ce4729c2ce0e8ad90";
-  public listeOperation(dateDebut,dateFin): Promise<any>{
+   //token=JSON.parse(sessionStorage.getItem('currentUser')).baseToken;
+   token="b21efc053cc7e16ce4729c2ce0e8ad90";
+   public listeOperation(dateDebut,dateFin): Promise<any>{
     let params="param="+JSON.stringify({dateDebut:dateDebut,dateFin:dateFin,token:this.token});
     console.log(params);
     
