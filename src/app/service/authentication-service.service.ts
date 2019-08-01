@@ -50,6 +50,8 @@ export class AuthenticationServiceService {
     console.log(params) ;
 
     return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
+      console.log(res);
+      
      let rp = JSON.parse(res['_body']);
      let resp = JSON.parse(rp);
      this.baseToken = sessionStorage.getItem('headToken')+sha1(resp.baseToken+sha1("bay3k00_f1_n10un") );
@@ -85,5 +87,18 @@ export class AuthenticationServiceService {
       return 'bad' 
       });
 
+  }
+
+  modifpwdinit(data:any){
+    let url = this.link+"/auth-sen/modifpwdinit";
+    let datas = JSON.stringify({token:JSON.parse(sessionStorage.getItem('currentUser')).baseToken, pwdactuel:data.pwdactuel, newpwd : data.newpwd});
+    let params = 'params='+datas;
+    return this.http.post(url, params, {headers:this.headers}).toPromise().then( res => {
+      console.log(res);
+      return JSON.parse(res['_body']) ;
+      } ).catch(error => {
+      console.log(error);
+      return 'bad' 
+      });
   }
 }

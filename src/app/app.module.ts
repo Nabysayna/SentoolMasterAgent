@@ -7,7 +7,9 @@ import {
     MatListModule,
     MatSidenavModule,
     MatToolbarModule,
-    MatSortModule
+    MatSortModule,
+    MatCheckboxModule,
+    MatInputModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +24,10 @@ import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AuthService } from './service/auth.service';
 import { AuthenticationServiceService } from './service/authentication-service.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FirstlogComponent } from './firstlog/firstlog.component';
+import { HttpModule } from '@angular/http';
+import { LoaderComponent } from './loader/loader.component';
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {
@@ -35,7 +41,7 @@ export const createTranslateLoader = (http: HttpClient) => {
 };
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, FirstlogComponent, ],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -43,7 +49,12 @@ export const createTranslateLoader = (http: HttpClient) => {
         LayoutModule,
         OverlayModule,
         HttpClientModule,
+        HttpModule,
         FormsModule,
+        MatInputModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        
         ModalModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
@@ -51,7 +62,9 @@ export const createTranslateLoader = (http: HttpClient) => {
                 useFactory: createTranslateLoader,
                 deps: [HttpClient]
             }
-        })
+        }),
+        FlexLayoutModule.withConfig({addFlexToParent: false})
+
     ],
     providers: [
         MasterServiceService,

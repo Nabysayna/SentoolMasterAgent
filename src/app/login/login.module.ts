@@ -8,6 +8,7 @@ import { LoginComponent } from './login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationServiceService } from '../service/authentication-service.service';
 import { HttpModule } from '@angular/http';
+import { LoaderComponent } from '../loader/loader.component';
 
 @NgModule({
     imports: [
@@ -23,6 +24,6 @@ import { HttpModule } from '@angular/http';
     providers: [
         AuthenticationServiceService,
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent,LoaderComponent]
 })
 export class LoginModule {}

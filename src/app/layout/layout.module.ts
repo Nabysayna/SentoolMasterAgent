@@ -32,6 +32,7 @@ import { AuthenticationServiceService } from '../service/authentication-service.
 import { AuthService } from '../service/auth.service';
 import { MasterServiceService } from '../service/master-service.service';
 import { HttpModule } from '@angular/http';
+import { Loader1Component } from './loader1/loader1.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { HttpModule } from '@angular/http';
         HttpModule,
         ModalModule.forRoot(),
         TranslateModule,
+        
     ],
     providers: [
         MasterServiceService,
@@ -64,7 +66,7 @@ import { HttpModule } from '@angular/http';
     ],
     exports: [
         MatSortModule,],
-    declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, CreateCompteComponent, ]
+    declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, CreateCompteComponent, Loader1Component ]
 
 })
 export class LayoutModule { }

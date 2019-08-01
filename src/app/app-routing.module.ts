@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { FirstlogComponent } from './firstlog/firstlog.component';
 
 const routes: Routes = [
     {
@@ -8,8 +9,13 @@ const routes: Routes = [
         loadChildren: './login/login.module#LoginModule'
     },
     {
+        path: 'soppipwdbifi',
+        component: FirstlogComponent
+    },
+    {
         path: 'login',
         loadChildren: './login/login.module#LoginModule'
+        
     },
     {
         path: '',

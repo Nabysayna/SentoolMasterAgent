@@ -42,33 +42,8 @@ export class DashboardComponent implements OnInit {
     
      operation:any;
 
-     nbrTransEM:number = 0;
-     montantTransEM:number = 0;
-     commissionTransEM:number = 0;
+     loading:boolean=false;
     
-     nbrTransWZ:number = 0;
-     montantTransWZ:number = 0;
-     commissionTransWZ:number = 0;
-    
-     nbrTransTNT:number = 0;
-     montantTransTNT:number = 0;
-     commissionTransTNT:number = 0;
-    
-     nbrTransCA:number = 0;
-     montantTransCA:number = 0;
-     commissionTransCA:number = 0;
-    
-     nbrTransPC:number = 0;
-     montantTransPC:number = 0;
-     commissionTransPC:number = 0;
-    
-     nbrTransFT:number = 0;
-     montantTransFT:number = 0;
-     commissionTransFT:number = 0;
-
-     nbrTransTC:number = 0;
-     montantTransTC:number = 0;
-     commissionTransTC:number = 0;
   
 
     applyFilter(filterValue: string) {
@@ -85,6 +60,7 @@ export class DashboardComponent implements OnInit {
         this.modalRef = this.modalService.show(template,{class: 'modal-lg'});
       }
     rechercher(){
+        this.loading = true;
        this.places = [];
        
         this._masterService.listeOperation(this.dateDebut,this.dateFin).then(res =>{
@@ -104,7 +80,7 @@ export class DashboardComponent implements OnInit {
                     this.cashin = this.cashin + 1;
                 }
                 this.getInfo(i.nomservice,i);
-               
+                this.loading = false;
                 
             }     
                  
@@ -193,6 +169,7 @@ export class DashboardComponent implements OnInit {
     listeDetail:any;
     nombreDetail:number=0;
     detailService(i){
+        this.loading = true;
         this.listeDetail =[];
         let serv =this.places[i].service;
         console.log(serv);
@@ -208,6 +185,7 @@ export class DashboardComponent implements OnInit {
             }
            
         }
+        this.loading = false;
         this.nombreDetail = this.listeDetail.length;
         console.log(this.listeDetail);
         
@@ -216,6 +194,7 @@ export class DashboardComponent implements OnInit {
         this.dateDebut = ((new Date()).toJSON()).split("T",2)[0];
         this.dateFin = ((new Date()).toJSON()).split("T",2)[0];
         this._masterService.listeOperation(this.dateDebut,this.dateFin).then(res =>{
+            this.loading = true;
             this.operation = res['operations'];
             //console.log(operation);
             this.nombreTransaction = this.operation.length;
@@ -232,108 +211,10 @@ export class DashboardComponent implements OnInit {
                 this.getInfo(i.nomservice,i);
                
                 
-            }     
+            }
+            this.loading = false;     
                  
         });
-       /* this.places = [
-            {
-                imgSrc: 'assets/images/om.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/tc.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/emo.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/wiz.png',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/kk.png',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/pc.png',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/zp.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/wy.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/tnt.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0
-            },
-            {
-                imgSrc: 'assets/images/cp.png',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            
-            {
-                imgSrc: 'assets/images/slc.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/sde.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/rpd.png',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            },
-            {
-                imgSrc: 'assets/images/ti.jpg',
-                nbrTransaction:  0,
-                montant: 0,
-                commission: 0,
-                service:""
-            }
-        ];*/
+      
     }
 }

@@ -5,7 +5,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class MasterServiceService {
-  private url:string='http://localhost:8088/db_mbirmi/index.php';
+  private url:string='https://sentool.bbstvnet.com/index.php';
   private header :HttpHeaders;
   constructor(private http:HttpClient) {
     this.header = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
