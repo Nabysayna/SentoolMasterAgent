@@ -86,6 +86,7 @@ export class DashboardComponent implements OnInit {
       }
     rechercher(){
        this.places = [];
+       
         this._masterService.listeOperation(this.dateDebut,this.dateFin).then(res =>{
             this.operation = res['operations'];
             //console.log(operation);

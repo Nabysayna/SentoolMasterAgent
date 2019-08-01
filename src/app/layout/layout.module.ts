@@ -53,7 +53,7 @@ import { HttpModule } from '@angular/http';
         HttpClientModule,
         HttpModule,
         ModalModule.forRoot(),
-        TranslateModule
+        TranslateModule,
     ],
     providers: [
         MasterServiceService,
