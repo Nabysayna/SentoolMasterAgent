@@ -19,6 +19,7 @@ export class Screen1Component implements OnInit {
     listeDetail:any = [];
     nombreDetail:number = 0;
     id_userSave:String;
+    loading:boolean=false;
 	constructor(private _masterService:MasterServiceService,private modalService: BsModalService) { 
         this.sortedData = this.listeDetail.slice();
     }
@@ -80,12 +81,14 @@ export class Screen1Component implements OnInit {
       return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
     }
 	ngOnInit() {
-        this._masterService.listeUser().then(res =>{
-            this.listeUser = res['users'];
-            this.dataSource = new MatTableDataSource(this.listeUser);
-            this.dataSource.sort = this.sort;   
-            console.log(res['users']); 
-        })
+    this.loading = true;
+    this._masterService.listeUser().then(res =>{
+        this.listeUser = res['users'];
+        this.dataSource = new MatTableDataSource(this.listeUser);
+        this.dataSource.sort = this.sort;  
+        this.loading = false; 
+        console.log(res['users']); 
+    })
         
         
 	}

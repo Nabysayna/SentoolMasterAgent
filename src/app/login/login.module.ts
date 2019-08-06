@@ -8,7 +8,7 @@ import { LoginComponent } from './login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationServiceService } from '../service/authentication-service.service';
 import { HttpModule } from '@angular/http';
-import { LoaderComponent } from '../loader/loader.component';
+import { LoaderModule } from '../shared/modules/loader/loader.module';
 
 @NgModule({
     imports: [
@@ -19,11 +19,12 @@ import { LoaderComponent } from '../loader/loader.component';
         MatButtonModule,
         FormsModule,
         HttpModule,
+        LoaderModule,
         FlexLayoutModule.withConfig({addFlexToParent: false})
     ],
     providers: [
         AuthenticationServiceService,
     ],
-    declarations: [LoginComponent,LoaderComponent]
+    declarations: [LoginComponent]
 })
 export class LoginModule {}

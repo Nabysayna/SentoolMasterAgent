@@ -191,10 +191,11 @@ export class DashboardComponent implements OnInit {
         
     }
     ngOnInit() {
+        this.loading = true;
         this.dateDebut = ((new Date()).toJSON()).split("T",2)[0];
         this.dateFin = ((new Date()).toJSON()).split("T",2)[0];
         this._masterService.listeOperation(this.dateDebut,this.dateFin).then(res =>{
-            this.loading = true;
+           
             this.operation = res['operations'];
             //console.log(operation);
             this.nombreTransaction = this.operation.length;

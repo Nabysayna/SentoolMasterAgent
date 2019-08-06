@@ -32,7 +32,6 @@ import { AuthenticationServiceService } from '../service/authentication-service.
 import { AuthService } from '../service/auth.service';
 import { MasterServiceService } from '../service/master-service.service';
 import { HttpModule } from '@angular/http';
-import { Loader1Component } from './loader1/loader1.component';
 
 
 @NgModule({
@@ -66,7 +65,7 @@ import { Loader1Component } from './loader1/loader1.component';
     ],
     exports: [
         MatSortModule,],
-    declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, CreateCompteComponent, Loader1Component ]
+    declarations: [Screen2Component, LayoutComponent, NavComponent, TopnavComponent, SidebarComponent, CreateCompteComponent, ]
 
 })
 export class LayoutModule { }

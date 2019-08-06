@@ -27,7 +27,7 @@ import { AuthenticationServiceService } from './service/authentication-service.s
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FirstlogComponent } from './firstlog/firstlog.component';
 import { HttpModule } from '@angular/http';
-import { LoaderComponent } from './loader/loader.component';
+
 
 // AoT requires an exported function for factories
 export const createTranslateLoader = (http: HttpClient) => {

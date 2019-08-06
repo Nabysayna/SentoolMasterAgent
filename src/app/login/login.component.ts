@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { AuthenticationServiceService } from '../service/authentication-service.service';
+import { LoaderComponent } from '../shared/modules/loader/loader/loader.component';
+
 
 @Component({
     selector: 'app-login',
@@ -21,11 +23,12 @@ export class LoginComponent implements OnInit {
         //this._authService.loggout();
     }
     onLoginPhaseTwo(){
+        this.loading = true;
         this.data.tokentemporaire = this.smsCode+"#"+sessionStorage.getItem('headToken');
         console.log(this.data.tokentemporaire);
         
         this._authService.authentificationPhaseTwo(this.data).then(res =>{
-            this.loading = true;
+           
             console.log(res.reponse==true);
             if(res.reponse==true){
                 this.loading = false;

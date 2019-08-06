@@ -17,9 +17,11 @@ export class CreateCompteComponent implements OnInit {
   adresse:any;
   region:any;
   response:number = 0;
+  loading:boolean;
   constructor(private _authService:AuthenticationServiceService,private _snackBar: MatSnackBar) { }
   
   creerpoint(){
+    this.loading =  true;
     this.response = 0;
     let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.tel+"#"+this.codeCreation, 'nometps':"-", 'nomshop':"-", adresse : JSON.stringify({'region':this.region, 'zone':"-", 'souszone':"-", 'address':this.adresse}), 'idcommercial':3 };
     console.log(paramInscrpt);
@@ -27,10 +29,12 @@ export class CreateCompteComponent implements OnInit {
       console.log(res);
       if(res=="n-a" || res=="bad"){
         this.response = -1;
+        this.loading =  false;
       }
      
       if(res=="ok"){
         this.response = 1;
+        this.loading =  false;
       }
       
     })

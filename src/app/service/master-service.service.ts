@@ -17,14 +17,14 @@ export class MasterServiceService {
     let params="param="+JSON.stringify({dateDebut:dateDebut,dateFin:dateFin,token:this.token});
     console.log(params);
     
-    let link=this.url+"/utils/listOperation";
+    let link=this.url+"/master/listOperation";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
   public listOperationByPoint(dateDebut,dateFin,id_user): Promise<any>{
     let params="param="+JSON.stringify({dateDebut:dateDebut,dateFin:dateFin,id_user:id_user});
     console.log(params);
     
-    let link=this.url+"/utils/listOperationByPoint";
+    let link=this.url+"/master/listOperationByPoint";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
   
@@ -32,7 +32,7 @@ export class MasterServiceService {
     let params="param="+JSON.stringify({token:this.token});
     console.log(params);
     
-    let link=this.url+"/utils/listUsers";
+    let link=this.url+"/master/listUsers";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
 
@@ -40,7 +40,7 @@ export class MasterServiceService {
     let params="param="+JSON.stringify({dateDebut:dateDebut,dateFin:dateFin,token:this.token,id_user:id_user});
     console.log(params);
     
-    let link=this.url+"/utils/listDeposit";
+    let link=this.url+"/master/listDeposit";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
 
@@ -48,7 +48,7 @@ export class MasterServiceService {
     let params="param="+JSON.stringify({montant:montant,token:this.token,id_receiver:id_user});
     console.log(params);
     
-    let link=this.url+"/utils/updateCaution";
+    let link=this.url+"/master/updateCaution";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
 
@@ -56,7 +56,7 @@ export class MasterServiceService {
     let params="param="+JSON.stringify({token:this.token});
     console.log(params);
     
-    let link=this.url+"/utils/getSolde";
+    let link=this.url+"/master/getSolde";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
 
