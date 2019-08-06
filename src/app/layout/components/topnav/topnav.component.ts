@@ -43,12 +43,13 @@ export class TopnavComponent implements OnInit {
                 localStorage.removeItem('isLoggedin');
                 
                 sessionStorage.removeItem('headToken');
+                sessionStorage.removeItem('currentUser');
                 sessionStorage.removeItem('baseToken');
                 this.router.navigate(['']);
                // window.location.reload() ;
               }else{
                 localStorage.removeItem('isLoggedin');
-                
+                sessionStorage.removeItem('currentUser');
                 sessionStorage.removeItem('headToken');
                 sessionStorage.removeItem('baseToken');
                 this.router.navigate(['']);
