@@ -30,7 +30,6 @@ export class AuthenticationServiceService {
     let datas = JSON.stringify({login:data.login, pwd: sha1(data.pwd) });
     this.email = data.login;
     let params = 'params='+datas;
-    console.log(params) ;
     return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
       //console.log(res);
       //console.log(res);
@@ -47,10 +46,8 @@ export class AuthenticationServiceService {
     let url = this.link+"/auth-sen/authentificationPhaseTwo";
     let datas = JSON.stringify({tokentemporaire:data.tokentemporaire});
     let params = 'params='+datas;
-    console.log(params) ;
 
     return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
-      console.log(res);
       
      let rp = JSON.parse(res['_body']);
      let resp = JSON.parse(rp);
@@ -80,7 +77,6 @@ export class AuthenticationServiceService {
     let datas = JSON.stringify(data);
     let params = 'params='+datas;
     return this.http.post(url,params,{headers:this.headers}).toPromise().then( res => {
-      console.log(res);
       return JSON.parse(res['_body']) ;
       } ).catch(error => {
       console.log(error);

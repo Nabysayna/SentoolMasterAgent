@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationServiceService } from 'src/app/service/authentication-service.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MasterServiceService } from 'src/app/service/master-service.service';
 
 @Component({
   selector: 'app-create-compte',
@@ -18,7 +19,7 @@ export class CreateCompteComponent implements OnInit {
   region:any;
   response:number = 0;
   loading:boolean;
-  constructor(private _authService:AuthenticationServiceService,private _snackBar: MatSnackBar) { }
+  constructor(private _authService:AuthenticationServiceService,private _serviceMaster: MasterServiceService) { }
   
   creerpoint(){
     this.loading =  true;
@@ -28,11 +29,19 @@ export class CreateCompteComponent implements OnInit {
     this._authService.inscription(paramInscrpt).then(res=>{
       console.log(res);
       if(res=="n-a" || res=="bad"){
+        this._serviceMaster.affectation(this.codeCreation).then(res =>{
+          console.log(res);
+          
+        })
         this.response = -1;
         this.loading =  false;
       }
      
       if(res=="ok"){
+        this._serviceMaster.affectation(this.codeCreation).then(res =>{
+          console.log(res);
+          
+        })
         this.response = 1;
         this.loading =  false;
       }
@@ -40,11 +49,7 @@ export class CreateCompteComponent implements OnInit {
     })
     
   }
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
+ 
   ngOnInit() {
     this.response = 0;
   }
