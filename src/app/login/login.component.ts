@@ -25,11 +25,11 @@ export class LoginComponent implements OnInit {
     onLoginPhaseTwo(){
         this.loading = true;
         this.data.tokentemporaire = this.smsCode+"#"+sessionStorage.getItem('headToken');
-        console.log(this.data.tokentemporaire);
+        //console.log(this.data.tokentemporaire);
         
         this._authService.authentificationPhaseTwo(this.data).then(res =>{
            
-            console.log(res.reponse==true);
+            //console.log(res.reponse==true);
             if(res.reponse==true){
                 this.loading = false;
                 if (JSON.parse(sessionStorage.getItem('currentUser')).firstuse==1){
@@ -47,14 +47,14 @@ export class LoginComponent implements OnInit {
         })
     }
     onLoginPhaseOne() {
-        console.log(this.login+" "+this.password);
+        //console.log(this.login+" "+this.password);
         this.loading = true;
        this.data.login = this.login;
         this.data.pwd = this.password;
         
         this._authService.login(this.data).then(res => {
             
-            console.log(res);
+           // console.log(res);
             if(res.includes("ok")){
                 this.phases = true;
                 this.loading = false;

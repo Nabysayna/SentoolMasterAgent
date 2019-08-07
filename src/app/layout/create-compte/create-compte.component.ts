@@ -25,12 +25,12 @@ export class CreateCompteComponent implements OnInit {
     this.loading =  true;
     this.response = 0;
     let paramInscrpt = {'token': '234576TVG5@u_45RRFT', 'prenom':this.prenom, 'nom':this.nom, 'email':this.email, 'telephone':this.tel+"#"+this.codeCreation, 'nometps':"-", 'nomshop':"-", adresse : JSON.stringify({'region':this.region, 'zone':"-", 'souszone':"-", 'address':this.adresse}), 'idcommercial':3 };
-    console.log(paramInscrpt);
+   // console.log(paramInscrpt);
     this._authService.inscription(paramInscrpt).then(res=>{
-      console.log(res);
+    //  console.log(res);
       if(res=="n-a" || res=="bad"){
         this._serviceMaster.affectation(this.codeCreation).then(res =>{
-          console.log(res);
+         // console.log(res);
           
         })
         this.response = -1;
@@ -39,7 +39,7 @@ export class CreateCompteComponent implements OnInit {
      
       if(res=="ok"){
         this._serviceMaster.affectation(this.codeCreation).then(res =>{
-          console.log(res);
+         // console.log(res);
           
         })
         this.response = 1;

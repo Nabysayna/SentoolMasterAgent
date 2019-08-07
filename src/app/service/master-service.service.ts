@@ -61,9 +61,9 @@ export class MasterServiceService {
   }
   public affectation(codeValidation): Promise<any>{
     let params="param="+JSON.stringify({codeValidation:codeValidation,timetampe:(new Date()).toString()});
-    console.log("param = "+params);
+    //console.log("param = "+params);
     
-    let link="http://localhost:8088/db_mbirmi/index.php/utils/affecterPoint";
+    let link=this.url+"/master/affecterPoint";
     return this.http.post(link,params,{headers:this.header}).toPromise().then( res => {console.log(res); return res} ).catch(error => {console.log(error); return 'bad' });
   }
 

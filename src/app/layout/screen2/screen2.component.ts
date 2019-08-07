@@ -59,9 +59,16 @@ export class Screen2Component implements OnInit {
                         this.loading = false;  
                         console.log(res['users']); 
                     })
-                }else{
+                }
+                if(res['code'] == 0){
                     this.depositeError = -1;
                     this.loading = false;
+                    alert("Votre Solde master insuffisant");
+                }
+                if(res['code'] == -1){
+                    this.depositeError = -1;
+                    this.loading = false;
+                    alert("Solde point du point insuffisant");
                 }
             });
             this.modalRef1.hide();
