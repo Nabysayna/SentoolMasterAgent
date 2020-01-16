@@ -53,3 +53,8 @@
 .ball-pulse > div {
     background-color: #337ab7 !important ;
  }
+ @media (max-width:1024px){
+     .logMobile{
+         width: 350px !important;
+     }
+ }
